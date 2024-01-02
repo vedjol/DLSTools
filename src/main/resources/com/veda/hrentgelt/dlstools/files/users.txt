@@ -1,0 +1,14 @@
+//Übersicht der "Admin" Nutzer
+//Zeilen werden ab der Stelle der Zeichenfolge "//" auskommentiert.
+//Leerzeilen werden nicht beachtet.
+
+//BSP //Auskommentierter Beispielnutzer
+MKO //Martin Kopp
+SGI //Sebastian Giesen
+SVI //Stefan Visser
+LBL //Leonhard Bläser
+JTE //Jeannine Terschüren
+DAP //Daniel Paland
+CGR //Clarissa Gratz
+AGU //Armin Gut
+JOL //Jonas Lieben
