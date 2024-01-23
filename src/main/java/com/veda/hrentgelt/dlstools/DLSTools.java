@@ -9,7 +9,10 @@ import com.veda.hrentgelt.dlstools.util.Table;
 import com.veda.hrentgelt.dlstools.util.images.ImageHandler;
 import com.veda.hrentgelt.dlstools.util.swing.*;
 import com.veda.hrentgelt.dlstools.util.swing.styles.SpecialStyle;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
@@ -17,12 +20,11 @@ import javax.swing.plaf.basic.BasicLookAndFeel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -30,7 +32,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 public class DLSTools extends JFrame {
     private static DLSTools INSTANCE;
@@ -38,7 +39,7 @@ public class DLSTools extends JFrame {
     //constant values
     private static final BasicLookAndFeel DARK_LAF = new SpecialStyle();
     private static final BasicLookAndFeel LIGHT_LAF = new FlatLightLaf();
-    private static final String STAND = "25.10.2023";
+    private static final String STAND = "02.01.2024";
     private static final String TITLE = "DLSTools   |  " + STAND;
     private static final String ADMIN_TITLE = TITLE + "  |  ADMIN";
 

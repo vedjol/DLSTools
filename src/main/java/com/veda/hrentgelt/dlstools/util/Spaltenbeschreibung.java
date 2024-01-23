@@ -91,7 +91,7 @@ public class Spaltenbeschreibung {
             case 'A':
                 if (val.length() > MAXLENGTH)
                     logger.log(System.Logger.Level.ERROR,
-                            "Das Feld " + NAME + " (col: " + this.COLUMN + " | row " + row + ") mit dem Inhalt\"" + val
+                            "Das Feld " + NAME + " (col: " + this.COLUMN + " | row " + row + ") mit dem Inhalt \"" + val
                                     + "\" hat eine zu großen Länge. Die erlaubte Maximallänge ist " + MAXLENGTH + ".");
                 break;
             // Numerisch
