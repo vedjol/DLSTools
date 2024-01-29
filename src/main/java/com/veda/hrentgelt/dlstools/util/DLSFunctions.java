@@ -21,7 +21,6 @@ import java.nio.file.Files;
 import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DLSFunctions {
     public static final String KASSENBEZ = "KASSENBEZ";
@@ -461,7 +460,7 @@ public class DLSFunctions {
         try {
             anPRNRs = getLines(anFile).stream().map(line -> {
                 String[] cols = line.split(String.valueOf(COLUMN_SEPARATOR));
-                return (cols.length > prnrIdx) ? cols[prnrIdx].trim() : "";
+                return (cols.length > prnrIdx) ? removeEncapsulator(cols[prnrIdx].trim()) : "";
             }).collect(Collectors.toSet());
         } catch (Exception e) {
             logger.log(System.Logger.Level.ERROR, "Zeilen der " + anFile.getAbsolutePath() + " konnte nicht ermittelt werden.");
@@ -471,7 +470,7 @@ public class DLSFunctions {
         try {
             anerPRNRs = getLines(anerFile).stream().map(l -> l.split(String.valueOf(COLUMN_SEPARATOR)))
                     .filter(cols -> cols.length > anerPrnrIdx && cols[anerCompanyIdx].trim().equals(company))
-                    .map(cols -> cols.length > anerPrnrIdx ? cols[anerPrnrIdx].trim() : "").collect(Collectors.toSet());
+                    .map(cols -> cols.length > anerPrnrIdx ? removeEncapsulator(cols[anerPrnrIdx].trim()) : "").collect(Collectors.toSet());
         } catch (IOException e) {
             logger.log(System.Logger.Level.ERROR, "Zeilen der " + anerFile.getAbsolutePath() + " konnte nicht ermittelt werden.");
             return;
@@ -497,6 +496,14 @@ public class DLSFunctions {
 
         if (onlyInANERFile.isEmpty() && onlyInANFile.isEmpty())
             logger.log(System.Logger.Level.INFO, "Keine Fehler beim Prüfen der " + DLSTools.AN_TABLE_NAME + " mit Firma " + company + " aufgefallen.");
+    }
+
+    private static String removeEncapsulator(String text) {
+        text = text.trim();
+        if(text.startsWith(String.valueOf(TEXT_ENCAPSULATOR)) && text.endsWith(String.valueOf(TEXT_ENCAPSULATOR))){
+            text = text.substring(1,text.length() - 1);
+        }
+        return text;
     }
 
     private static void checkANERData(File anerFile) {

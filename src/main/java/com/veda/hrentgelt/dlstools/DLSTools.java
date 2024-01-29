@@ -39,7 +39,7 @@ public class DLSTools extends JFrame {
     //constant values
     private static final BasicLookAndFeel DARK_LAF = new SpecialStyle();
     private static final BasicLookAndFeel LIGHT_LAF = new FlatLightLaf();
-    private static final String STAND = "25.10.2023";
+    private static final String STAND = "02.01.2024";
     private static final String TITLE = "DLSTools   |  " + STAND;
     private static final String ADMIN_TITLE = TITLE + "  |  ADMIN";
 

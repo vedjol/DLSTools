@@ -13,8 +13,8 @@ public class Spaltenbeschreibungen {
             new Spaltenbeschreibung('N', 2, 6, 0, "PRNR_NEU", "", true),
             new Spaltenbeschreibung('A', 3, 3, 0, "FIRMA", "", true),
 
-            new Spaltenbeschreibung('N', 4, 1, 0, "ABRECHNUNGSGRUPPE", "", false, 1, 2, 3, 4, 5, 6),
-            new Spaltenbeschreibung('A', 5, 6, 0, "ABTEILUNG", "", false),
+            new Spaltenbeschreibung('N', 4, 1, 0, "Abrechnungsgruppe", "", false, 1, 2, 3, 4, 5, 6),
+            new Spaltenbeschreibung('A', 5, 6, 0, "Abteilung", "", false),
             new Spaltenbeschreibung('A', 6, 10, 0, "Kostenstelle", "", false),
             new Spaltenbeschreibung('A', 7, 3, 0, "Taetigkeit", "", false),
             new Spaltenbeschreibung('A', 8, 3, 0, "Sachbereich", "", false),
@@ -41,36 +41,38 @@ public class Spaltenbeschreibungen {
             new Spaltenbeschreibung('A', 29, 2, 0, "Berufsgenossenschaft 3", "", false),
             new Spaltenbeschreibung('N', 30, 5, 2, "Berufsgenossenschaft 3 (%-Satz)", "", false),
             new Spaltenbeschreibung('A', 31, 8, 0, "Gefahrtarifstelle 3", "", false),
+            new Spaltenbeschreibung('A', 34, 8, 0, "NAME_GRUNDVERGÜTUNGSTABELLE", "", false),
+            new Spaltenbeschreibung('A', 35, 8, 0, "TARIF_VERGÜTUNGSGRUPPE", "", false),
+            new Spaltenbeschreibung('N', 36, 3, 0, "VERGÜTUNGSSTUFE", "", false),
 
+            new Spaltenbeschreibung('A', 32, Integer.MAX_VALUE, 0, "EMPTY_FIELD", "", false),
+            new Spaltenbeschreibung('A', 33, Integer.MAX_VALUE, 0, "EMPTY_FIELD", "", false),
 
-            new Spaltenbeschreibung('A', 32, 8, 0, "NAME_GRUNDVERGÜTUNGSTABELLE", "", false),
-            new Spaltenbeschreibung('A', 32, 8, 0, "TARIF_VERGÜTUNGSGRUPPE", "", false),
-            new Spaltenbeschreibung('N', 32, 3, 0, "VERGÜTUNGSSTUFE", "", false),
-            new Spaltenbeschreibung('A', 32, 17, 0, "BERUFSST_V-WERK_MITGLIEDSNUMMER", "", false),
-            new Spaltenbeschreibung('A', 32, 2, 0, "ECHTE_KK_BEI_PGS_109/110", "", false),
+            new Spaltenbeschreibung('A', 37, 17, 0, "BERUFSST_V-WERK_MITGLIEDSNUMMER", "", false),
+            new Spaltenbeschreibung('A', 38, 2, 0, "ECHTE_KK_BEI_PGS_109/110", "", false),
 
-            new Spaltenbeschreibung('A', 32, 8, 0, "STUNDENLOHN", "", false),
+            new Spaltenbeschreibung('A', 39, 8, 0, "Stundenlohn", "", false),
 
-            new Spaltenbeschreibung('A', 32, 8, 0, "STUNDENLOHNEMPFÄNGER", "", false),
+            new Spaltenbeschreibung('A', 40, 8, 0, "Stundenlohnempfänger", "", false),
 
-            new Spaltenbeschreibung('A', 32, 8, 0, "KV_VORG_GES", "", false),
+            new Spaltenbeschreibung('A', 41, 8, 0, "KV_VORG_GES", "", false),
 
-            new Spaltenbeschreibung('A', 32, 8, 0, "KV_VORG_AG", "", false),
+            new Spaltenbeschreibung('A', 42, 8, 0, "KV_VORG_AG", "", false),
 
-            new Spaltenbeschreibung('A', 32, 8, 0, "PV_VORG_GES", "", false),
+            new Spaltenbeschreibung('A', 43, 8, 0, "PV_VORG_GES", "", false),
 
-            new Spaltenbeschreibung('A', 32, 8, 0, "PV_VORG_AG", "", false),
+            new Spaltenbeschreibung('A', 44, 8, 0, "PV_VORG_AG", "", false),
 
+            new Spaltenbeschreibung('A', 45, 8, 0, "BASISTARIF_ANTEIL_AN", "", false),
 
-            new Spaltenbeschreibung('A', 32, 8, 0, "BASISTARIF_ANTEIL_AN", "", false),
+            new Spaltenbeschreibung('A', 46, 8, 0, "ÜBERGANGSBEREICH_ABGERECHNET", "", false),
 
-            new Spaltenbeschreibung('A', 32, 8, 0, "ÜBERGANGSBEREICH_ABGERECHNET", "", false),
+            new Spaltenbeschreibung('A', 32, Integer.MAX_VALUE, 0, "EMPTY_FIELD", "", false),
+            new Spaltenbeschreibung('A', 33, Integer.MAX_VALUE, 0, "EMPTY_FIELD", "", false),
 
-            new Spaltenbeschreibung('A', 32, 8, 0, "AKADEMISCHER_TITEL", "", false),
+            new Spaltenbeschreibung('A', 47, 8, 0, "Akademischer Titel", "", false),
 
-            new Spaltenbeschreibung('A', 32, 8, 0, "TÄTIGKEITSSCHLÜSSEL", "", false),
-
-
+            new Spaltenbeschreibung('A', 48, 8, 0, "TÄTIGKEITSSCHLÜSSEL", "", false),
     };
 
     public static final Spaltenbeschreibung[] BEZUEGE_ABZUEGE_SPALTENBESCHREIBUNG = {
