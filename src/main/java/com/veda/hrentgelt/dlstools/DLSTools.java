@@ -9,7 +9,10 @@ import com.veda.hrentgelt.dlstools.util.Table;
 import com.veda.hrentgelt.dlstools.util.images.ImageHandler;
 import com.veda.hrentgelt.dlstools.util.swing.*;
 import com.veda.hrentgelt.dlstools.util.swing.styles.SpecialStyle;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
@@ -17,12 +20,11 @@ import javax.swing.plaf.basic.BasicLookAndFeel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -30,7 +32,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 public class DLSTools extends JFrame {
     private static DLSTools INSTANCE;
@@ -355,8 +356,10 @@ public class DLSTools extends JFrame {
         } catch (Exception e) {
             y = STANDARD_Y;
         }
-        isFullscreen = "true".equalsIgnoreCase(isFullscreenString.trim());
 
+        isFullscreen = isFullscreenString != null && "true".equalsIgnoreCase(isFullscreenString.trim());
+
+        currentColorString = currentColorString == null ? "" : currentColorString;
         try {
             String[] values = currentColorString.split(COLUMN_SEPARATOR);
             currentColor = new Color(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]));
@@ -370,6 +373,8 @@ public class DLSTools extends JFrame {
             currentLAF = LIGHT_LAF;
         }
 
+
+        currentSourcePathString = currentSourcePathString == null ? "" : currentSourcePathString;
         File f = new File(currentSourcePathString.trim());
         if (!f.exists()) {
             currentSourcePathLabel = isAdmin ? new JLabel(STANDARD_ADMIN_SOURCE_PATH) : new JLabel(STANDARD_SOURCE_PATH);
@@ -535,18 +540,34 @@ public class DLSTools extends JFrame {
         //Buttons
         deleteUnwantedLinesButton = new JButton("Überflüssige Zeilen entfernen");
         JMenuItem deleteUnwantedANDataItem = new JMenuItem("AN-Daten");
-        deleteUnwantedANDataItem.addActionListener(a -> DLSFunctions.removeUnusableANLines(indexFileData, new File(getPath(AN_TABLE_NAME))));
+        deleteUnwantedANDataItem.addActionListener(a -> DLSFunctions.removeUnusableANLines(indexFileData, new File(getPath(AN_TABLE_NAME)), false));
         JMenuItem deleteUnwantedSVDataItem = new JMenuItem("SV-Daten");
-        deleteUnwantedSVDataItem.addActionListener(a -> DLSFunctions.removeUnusableSVLines(indexFileData, new File(getPath(SV_TABLE_NAME))));
+        deleteUnwantedSVDataItem.addActionListener(a -> DLSFunctions.removeUnusableSVLines(indexFileData, new File(getPath(SV_TABLE_NAME)), false));
         JMenuItem deleteAllUnwantedDataItem = new JMenuItem("Beide");
         deleteAllUnwantedDataItem.addActionListener(a -> {
             deleteUnwantedANDataItem.doClick();
             deleteUnwantedSVDataItem.doClick();
         });
+
+        JMenuItem deleteUnwantedANDataForSpecificYearItem = new JMenuItem("AN-Daten (nur aktuelles Jahr überlassen)");
+        deleteUnwantedANDataForSpecificYearItem.addActionListener(a -> DLSFunctions.removeUnusableANLines(indexFileData, new File(getPath(AN_TABLE_NAME)), true));
+        JMenuItem deleteUnwantedSVDataForSpecificYearItem = new JMenuItem("SV-Daten (nur aktuelles Jahr überlassen)");
+        deleteUnwantedSVDataForSpecificYearItem.addActionListener(a -> DLSFunctions.removeUnusableSVLines(indexFileData, new File(getPath(SV_TABLE_NAME)), true));
+        JMenuItem deleteAllUnwantedForSpecificYearDataItem = new JMenuItem("Beide (nur aktuelles Jahr überlassen)");
+        deleteAllUnwantedForSpecificYearDataItem.addActionListener(a -> {
+            deleteUnwantedANDataForSpecificYearItem.doClick();
+            deleteUnwantedSVDataForSpecificYearItem.doClick();
+        });
+
         deleteUnwantedLinesMenu = new JPopupMenu();
         deleteUnwantedLinesMenu.add(deleteUnwantedANDataItem);
         deleteUnwantedLinesMenu.add(deleteUnwantedSVDataItem);
         deleteUnwantedLinesMenu.add(deleteAllUnwantedDataItem);
+
+        deleteUnwantedLinesMenu.add(deleteUnwantedANDataForSpecificYearItem);
+        deleteUnwantedLinesMenu.add(deleteUnwantedSVDataForSpecificYearItem);
+        deleteUnwantedLinesMenu.add(deleteAllUnwantedForSpecificYearDataItem);
+
         deleteUnwantedLinesButton.addActionListener(a -> {
             deleteUnwantedLinesMenu.show(deleteUnwantedLinesButton, deleteUnwantedLinesButton.getWidth(), 0);
         });

@@ -12,3 +12,6 @@ DAP //Daniel Paland
 CGR //Clarissa Gratz
 AGU //Armin Gut
 JOL //Jonas Lieben
+Jonas //Jonas Lieben
+KCA //Kristina Canli
+TGU //Thomas Günther

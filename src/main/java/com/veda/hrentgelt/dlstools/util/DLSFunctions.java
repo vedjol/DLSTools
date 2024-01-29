@@ -18,6 +18,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.nio.file.Files;
+import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,7 +33,13 @@ public class DLSFunctions {
     private DLSFunctions() {
     }
 
-    public static void removeUnusableANLines(IndexFileData indexFileData, File anFile) {
+    public static int chooseYear() {
+        //TODO
+//        return -1;
+        return Year.now().getValue();
+    }
+
+    public static void removeUnusableANLines(IndexFileData indexFileData, File anFile, boolean onlyKeepThisYearsData) {
         LogPanel logger = LogPanel.getInstance();
         logger.log(System.Logger.Level.INFO, "Entfernen der überflüssigen AN-Zeilen");
         if (indexFileData == null) {
@@ -69,6 +76,7 @@ public class DLSFunctions {
         //Dateibeschreibung und Zeilen vorhanden
         //Datei auslesen; neuste Zeilen ermitteln
         HashMap<ArbeitnehmerKey, String> newestRecords = new HashMap<>();
+        final int YEAR = 2023/*DLSFunctions.chooseYear()*/;
         lines.forEach(line -> {
             //Keyfelder finden
             String[] columns = line.split(String.valueOf(COLUMN_SEPARATOR));
@@ -79,13 +87,16 @@ public class DLSFunctions {
                 ArbeitnehmerKey key = new ArbeitnehmerKey(prnr, abrj, abrm);
 
                 List<ArbeitnehmerKey> keys = newestRecords.keySet().stream().toList();
-                if (keys.contains(key)) {
-                    ArbeitnehmerKey k2 = keys.get(keys.indexOf(key));
-                    if (key.isNewerThan(k2)) {
-                        newestRecords.remove(k2);
-                        newestRecords.put(key, line);
-                    }
-                } else newestRecords.put(key, line);
+
+                if (abrj == YEAR || !onlyKeepThisYearsData) {
+                    if (keys.contains(key)) {
+                        ArbeitnehmerKey k2 = keys.get(keys.indexOf(key));
+                        if (key.isNewerThan(k2)) {
+                            newestRecords.remove(k2);
+                            newestRecords.put(key, line);
+                        }
+                    } else newestRecords.put(key, line);
+                }
 
             } catch (Exception e) {
                 logger.log(System.Logger.Level.ERROR, "Zeile konnte nicht verarbeitet werden, da die " +
@@ -115,7 +126,7 @@ public class DLSFunctions {
         printEncodingWarning();
     }
 
-    public static void removeUnusableSVLines(IndexFileData indexFileData, File svFile) {
+    public static void removeUnusableSVLines(IndexFileData indexFileData, File svFile, boolean onlyKeepThisYearsData) {
         LogPanel logger = LogPanel.getInstance();
         logger.log(System.Logger.Level.INFO, "Entfernen der überflüssigen SV-Zeilen");
         if (indexFileData == null) {
@@ -152,6 +163,7 @@ public class DLSFunctions {
         //Dateibeschreibung und Zeilen vorhanden
         //Datei auslesen; neuste Zeilen ermitteln
         HashMap<SozialversicherungsKey, String> newestRecords = new HashMap<>();
+        final int YEAR = 2023/*DLSFunctions.chooseYear()*/;
         lines.forEach(line -> {
             //Keyfelder finden
             String[] columns = line.split(String.valueOf(COLUMN_SEPARATOR));
@@ -168,14 +180,16 @@ public class DLSFunctions {
                 SozialversicherungsKey key = new SozialversicherungsKey(prnr, abrj, abrm, lfdn);
 
                 List<SozialversicherungsKey> keys = newestRecords.keySet().stream().toList();
-                if (keys.contains(key)) {
-                    SozialversicherungsKey k2 = keys.get(keys.indexOf(key));
-                    if (key.isNewerThan(k2)) {
-                        newestRecords.remove(k2);
-                        newestRecords.put(key, line);
-                    }
-                } else newestRecords.put(key, line);
 
+                if (abrj == YEAR || !onlyKeepThisYearsData) {
+                    if (keys.contains(key)) {
+                        SozialversicherungsKey k2 = keys.get(keys.indexOf(key));
+                        if (key.isNewerThan(k2)) {
+                            newestRecords.remove(k2);
+                            newestRecords.put(key, line);
+                        }
+                    } else newestRecords.put(key, line);
+                }
             } catch (Exception e) {
                 logger.log(System.Logger.Level.ERROR, "Zeile konnte nicht verarbeitet werden, da die Schlüsselfelder nicht gefunden werden konnten: " + line);
             }
