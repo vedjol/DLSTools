@@ -59,7 +59,6 @@ public class Spaltenbeschreibung {
                 }
             }
         }
-
     }
 
     public Spaltenbeschreibung(char type, int col, int maxLength, int accuracy, String name, String dateType,
