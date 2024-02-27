@@ -542,7 +542,7 @@ public class DLSFunctions {
 		checkForTextEncapsulator(anerFile);
 
 		//- Dateiinhalt valid (gegen Dateibeschreibung prüfen)
-		Spaltenbeschreibungen.logErrors(lines, Spaltenbeschreibungen.ERGAENZUNGSBESCHREIBUNG);
+		Spaltenbeschreibungen.logErrors(lines, Spaltenbeschreibungen.ERGAENZUNG_SPALTENBESCHREIBUNG);
 
 		logger.log(System.Logger.Level.INFO, "Prüfung der " + anerFile + " abgeschlossen.");
 	}
