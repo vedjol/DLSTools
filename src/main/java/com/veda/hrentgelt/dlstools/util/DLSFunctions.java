@@ -25,8 +25,13 @@ import java.util.stream.Collectors;
 public class DLSFunctions {
 	public static final String KASSENBEZ = "KASSENBEZ";
 	public static final String BETR_NR_KK = "BETR_NR_KK";
-	public static final char COLUMN_SEPARATOR = ';';
 	private static final String STANDARD_ENCODING_APPENDER = "_richtiges_encoding";
+	private static final String PERS_NR = "PERS_NR";
+	private static final String ABR_JAHR = "ABR_JAHR";
+	private static final String ABR_MON = "ABR_MON";
+	private static final String AEND_ZAHL = "AEND_ZAHL";
+
+	public static final char COLUMN_SEPARATOR = ';';
 	private static final char TEXT_ENCAPSULATOR = '"';
 
 	private DLSFunctions() {
@@ -78,9 +83,9 @@ public class DLSFunctions {
 			//Keyfelder finden
 			String[] columns = line.split(String.valueOf(COLUMN_SEPARATOR));
 			try {
-				String prnr = columns[anTable.getIndexOf("PERS_NR")];
-				int abrj = Integer.parseInt(columns[anTable.getIndexOf("ABR_JAHR")].replaceAll("\"", "").trim());
-				int abrm = Integer.parseInt(columns[anTable.getIndexOf("ABR_MON")].replaceAll("\"", "").trim());
+				String prnr = columns[anTable.getIndexOf(PERS_NR)];
+				int abrj = Integer.parseInt(columns[anTable.getIndexOf(ABR_JAHR)].replaceAll("\"", "").replaceAll("\\.", "").trim());
+				int abrm = Integer.parseInt(columns[anTable.getIndexOf(ABR_MON)].replaceAll("\"", "").replaceAll("\\.", "").trim());
 				ArbeitnehmerKey key = new ArbeitnehmerKey(prnr, abrj, abrm);
 
 				List<ArbeitnehmerKey> keys = newestRecords.keySet().stream().toList();
@@ -164,12 +169,12 @@ public class DLSFunctions {
 			//Keyfelder finden
 			String[] columns = line.split(String.valueOf(COLUMN_SEPARATOR));
 			try {
-				String prnr = columns[svTable.getIndexOf("PERS_NR")];
-				int abrj = Integer.parseInt(columns[svTable.getIndexOf("ABR_JAHR")].replaceAll("\"", "").trim());
-				int abrm = Integer.parseInt(columns[svTable.getIndexOf("ABR_MON")].replaceAll("\"", "").trim());
+				String prnr = columns[svTable.getIndexOf(PERS_NR)];
+				int abrj = Integer.parseInt(columns[svTable.getIndexOf(ABR_JAHR)].replaceAll("\"", "").replaceAll("\\.", "").trim());
+				int abrm = Integer.parseInt(columns[svTable.getIndexOf(ABR_MON)].replaceAll("\"", "").replaceAll("\\.", "").trim());
 				int lfdn;
 				try {
-					lfdn = Integer.parseInt(columns[svTable.getIndexOf("AEND_ZAHL")].replaceAll("\"", "").trim());
+					lfdn = Integer.parseInt(columns[svTable.getIndexOf(AEND_ZAHL)].replaceAll("\"", "").trim());
 				} catch (Exception e) {
 					lfdn = 1;
 				}
